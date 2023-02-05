@@ -1,8 +1,9 @@
-import axios from "axios";
 import React, { Fragment, useEffect, useState } from "react";
+
 import { Link } from "react-router-dom";
-import useBreadcrumbs from "use-react-router-breadcrumbs";
 import PageTitle from "../components/PageTitle";
+import axios from "axios";
+import useBreadcrumbs from "use-react-router-breadcrumbs";
 
 function Booking() {
   const breadcrumbs = useBreadcrumbs();
@@ -17,7 +18,7 @@ function Booking() {
 
     axios
       .get(
-        "http://localhost:1337/api/promotion-rooms" +
+        "https://mwsun-strapi.onrender.com/api/promotion-rooms" +
           "?populate[room][populate][0]=displayPhoto",
         config
       )
@@ -615,7 +616,7 @@ function Booking() {
                       >
                         <img
                           src={
-                            "http://localhost:1337" +
+                            "https://mwsun-strapi.onrender.com" +
                             room.attributes.room.data.attributes.displayPhoto
                               .data.attributes.url
                           }

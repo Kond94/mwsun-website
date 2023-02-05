@@ -18,7 +18,7 @@ function Home() {
 
     axios
       .get(
-        "http://localhost:1337/api/promotion-rooms" +
+        "https://mwsun-strapi.onrender.com/api/promotion-rooms" +
           "?populate[room][populate][0]=displayPhoto",
         config
       )
@@ -189,7 +189,7 @@ function Home() {
                           <img
                             alt=''
                             src={
-                              "http://localhost:1337" +
+                              "https://mwsun-strapi.onrender.com" +
                               currentRoom.room.displayPhoto.data.attributes.url
                             }
                             className='img-responsive'

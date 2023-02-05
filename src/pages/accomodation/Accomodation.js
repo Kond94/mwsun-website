@@ -1,9 +1,9 @@
 import React, { Fragment, useEffect, useState } from "react";
-import useBreadcrumbs from "use-react-router-breadcrumbs";
 
 import { Link } from "react-router-dom";
-import axios from "axios";
 import PageTitle from "../../components/PageTitle";
+import axios from "axios";
+import useBreadcrumbs from "use-react-router-breadcrumbs";
 
 function Accomodation() {
   const [error, setError] = useState(null);
@@ -17,7 +17,10 @@ function Accomodation() {
     };
 
     axios
-      .get("http://localhost:1337/api/rooms" + "?populate=*", config)
+      .get(
+        "https://mwsun-strapi.onrender.com/api/rooms" + "?populate=*",
+        config
+      )
       .then(({ data }) => {
         setRooms(data.data);
       })
@@ -53,7 +56,7 @@ function Accomodation() {
                         >
                           <img
                             src={
-                              "http://localhost:1337" +
+                              "https://mwsun-strapi.onrender.com" +
                               attributes.displayPhoto.data.attributes.url
                             }
                             className='img-responsive'

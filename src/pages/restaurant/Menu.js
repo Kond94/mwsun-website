@@ -8,7 +8,7 @@ const Menu = ({ items }) => {
         return (
           <article key={id} className='menu-item'>
             <img
-              src={"http://localhost:1337" + image}
+              src={"https://mwsun-strapi.onrender.com" + image}
               alt={title}
               className='photo'
             />

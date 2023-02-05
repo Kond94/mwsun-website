@@ -2,10 +2,11 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 
 import { Link, useLocation } from "react-router-dom";
 import React, { Fragment, useEffect, useState } from "react";
-import useBreadcrumbs from "use-react-router-breadcrumbs";
+
 import { Carousel } from "react-responsive-carousel";
-import axios from "axios";
 import PageTitle from "../../components/PageTitle";
+import axios from "axios";
+import useBreadcrumbs from "use-react-router-breadcrumbs";
 
 function Room() {
   const location = useLocation();
@@ -26,7 +27,10 @@ function Room() {
     };
 
     axios
-      .get("http://localhost:1337/api/rooms/" + roomId + "?populate=*", config)
+      .get(
+        "https://mwsun-strapi.onrender.com/api/rooms/" + roomId + "?populate=*",
+        config
+      )
       .then(({ data }) => {
         setRoom({
           ...data.data.attributes,
@@ -59,7 +63,10 @@ function Room() {
               <Carousel autoPlay infiniteLoop width='100%'>
                 {room.images?.map((image) => (
                   <div key={image}>
-                    <img src={"http://localhost:1337" + image} alt='' />
+                    <img
+                      src={"https://mwsun-strapi.onrender.com" + image}
+                      alt=''
+                    />
                     <p className='legend'>Legend 1</p>
                   </div>
                 ))}

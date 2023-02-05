@@ -2,10 +2,10 @@ import React, { Fragment, useEffect, useState } from "react";
 
 import Categories from "./Categories";
 import Menu from "./Menu";
-import items from "./data";
-import useBreadcrumbs from "use-react-router-breadcrumbs";
 import PageTitle from "../../components/PageTitle";
 import axios from "axios";
+import items from "./data";
+import useBreadcrumbs from "use-react-router-breadcrumbs";
 
 function Restaurant() {
   const [allMeals, setAllMeals] = useState([]);
@@ -22,7 +22,10 @@ function Restaurant() {
     };
 
     axios
-      .get("http://localhost:1337/api/meals" + "?populate=*", config)
+      .get(
+        "https://mwsun-strapi.onrender.com/api/meals" + "?populate=*",
+        config
+      )
       .then(({ data }) => {
         const allMeals = data.data.map((meal) => {
           return {
