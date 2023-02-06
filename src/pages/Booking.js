@@ -12,13 +12,14 @@ function Booking() {
   useEffect(() => {
     const config = {
       headers: {
-        Authorization: `Bearer ${"6a5d48ccb58a2375824da5a06d309505b68e5dffadab817315d16463d70a9630b6b0a9dbd9bffb79990d6359c4f5fa6626f3242dcbb255e41ad0c85023a0dcda1c97bf0e1920a0bc3c20c1a87f94fcbe85cd3c58ca2baa5636be52c72b8d85377fadc66c3f2d3c7e5db8122025f6ca3c7f7916b36f84caa52202e785505970aa"}`,
+        Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
       },
     };
 
     axios
       .get(
-        "https://mwsun-strapi.onrender.com/api/promotion-rooms" +
+        process.env.REACT_APP_API_URL +
+          "/api/promotion-rooms" +
           "?populate[room][populate][0]=displayPhoto",
         config
       )
@@ -616,7 +617,8 @@ function Booking() {
                       >
                         <img
                           src={
-                            "https://mwsun-strapi.onrender.com" +
+                            process.env.REACT_APP_API_URL +
+                            "" +
                             room.attributes.room.data.attributes.displayPhoto
                               .data.attributes.url
                           }

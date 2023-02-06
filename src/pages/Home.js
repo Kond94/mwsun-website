@@ -10,15 +10,17 @@ function Home() {
   const [promotionRooms, setPromotionRooms] = useState([]);
 
   useEffect(() => {
+    console.log(process.env.NODE_ENV);
     const config = {
       headers: {
-        Authorization: `Bearer ${"6a5d48ccb58a2375824da5a06d309505b68e5dffadab817315d16463d70a9630b6b0a9dbd9bffb79990d6359c4f5fa6626f3242dcbb255e41ad0c85023a0dcda1c97bf0e1920a0bc3c20c1a87f94fcbe85cd3c58ca2baa5636be52c72b8d85377fadc66c3f2d3c7e5db8122025f6ca3c7f7916b36f84caa52202e785505970aa"}`,
+        Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
       },
     };
 
     axios
       .get(
-        "https://mwsun-strapi.onrender.com/api/promotion-rooms" +
+        process.env.REACT_APP_API_URL +
+          "/api/promotion-rooms" +
           "?populate[room][populate][0]=displayPhoto",
         config
       )
@@ -148,72 +150,83 @@ function Home() {
             </p>
             <div className='row'>
               {/* ITEM */}
-              {promotionRooms.map((promotionRoom) => {
-                const currentRoom = {
-                  ...promotionRoom.attributes,
-                  room: {
-                    id: promotionRoom.attributes.room.data.id,
-                    ...promotionRoom.attributes.room.data.attributes,
-                  },
-                };
-                return (
-                  <div key={currentRoom.promotionName} className='col-md-4'>
-                    <article className='room'>
-                      <figure>
-                        {currentRoom.discount > 0 ? (
-                          <div className='price'>
-                            <span
-                              style={{
-                                textDecoration: "line-through",
-                                color: "yellow",
-                              }}
-                            >
-                              was ${currentRoom.room.price}
+              {promotionRooms.length > 0 ? (
+                promotionRooms.map((promotionRoom) => {
+                  const currentRoom = {
+                    ...promotionRoom.attributes,
+                    room: {
+                      id: promotionRoom.attributes.room.data.id,
+                      ...promotionRoom.attributes.room.data.attributes,
+                    },
+                  };
+                  console.log(
+                    process.env.REACT_APP_UPLOADS_URL +
+                      currentRoom.room.displayPhoto.data.attributes.url
+                  );
+
+                  return (
+                    <div key={currentRoom.promotionName} className='col-md-4'>
+                      <article className='room'>
+                        <figure>
+                          {currentRoom.discount > 0 ? (
+                            <div className='price'>
+                              <span
+                                style={{
+                                  textDecoration: "line-through",
+                                  color: "yellow",
+                                }}
+                              >
+                                was ${currentRoom.room.price}
+                              </span>
+                              {"   NOW"} $
+                              {currentRoom.room.price -
+                                (currentRoom.discount / 100) *
+                                  currentRoom.room.price}
+                              <span>/ night</span>
+                            </div>
+                          ) : (
+                            <div className='price'>
+                              <span> ${currentRoom.room.price}/ night</span>
+                            </div>
+                          )}
+                          <Link
+                            className='hover_effect h_blue h_link'
+                            to='/accomodation/room'
+                            state={{ roomId: currentRoom.room.id }}
+                          >
+                            <img
+                              alt=''
+                              src={
+                                process.env.REACT_APP_UPLOADS_URL +
+                                "" +
+                                currentRoom.room.displayPhoto.data.attributes
+                                  .url
+                              }
+                              className='img-responsive'
+                            />
+                          </Link>
+                          <figcaption>
+                            <h4>
+                              <a href='room.html'>{currentRoom.room.name}</a>
+                            </h4>
+                            <span className='f_right'>
+                              <Link
+                                to='/accomodation/room'
+                                state={{ roomId: currentRoom.room.id }}
+                                className='button btn_sm btn_blue'
+                              >
+                                VIEW DETAILS
+                              </Link>
                             </span>
-                            {"   NOW"} $
-                            {currentRoom.room.price -
-                              (currentRoom.discount / 100) *
-                                currentRoom.room.price}
-                            <span>/ night</span>
-                          </div>
-                        ) : (
-                          <div className='price'>
-                            <span> ${currentRoom.room.price}/ night</span>
-                          </div>
-                        )}
-                        <Link
-                          className='hover_effect h_blue h_link'
-                          to='/accomodation/room'
-                          state={{ roomId: currentRoom.room.id }}
-                        >
-                          <img
-                            alt=''
-                            src={
-                              "https://mwsun-strapi.onrender.com" +
-                              currentRoom.room.displayPhoto.data.attributes.url
-                            }
-                            className='img-responsive'
-                          />
-                        </Link>
-                        <figcaption>
-                          <h4>
-                            <a href='room.html'>Single Room</a>
-                          </h4>
-                          <span className='f_right'>
-                            <Link
-                              to='/accomodation/room'
-                              state={{ roomId: currentRoom.room.id }}
-                              className='button btn_sm btn_blue'
-                            >
-                              VIEW DETAILS
-                            </Link>
-                          </span>
-                        </figcaption>
-                      </figure>
-                    </article>
-                  </div>
-                );
-              })}
+                          </figcaption>
+                        </figure>
+                      </article>
+                    </div>
+                  );
+                })
+              ) : (
+                <></>
+              )}
             </div>
             <div className='mt40 a_center'>
               <Link className='button btn_sm btn_yellow' to='/accomodation'>

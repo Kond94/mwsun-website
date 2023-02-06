@@ -12,6 +12,7 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import Restaurant from "./pages/restaurant/Restaurant";
 import Room from "./pages/accomodation/Room";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         </div>
       </div>
       <Router>
+        <ScrollToTop />
         <Header />
         <Routes>
           <Route path='/' element={<Home />} />

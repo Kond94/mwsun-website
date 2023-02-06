@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "/subscriptions/80b7cbbf-4a07-4875-bf97-2eda2ef8754e/resourceGroups/mwsun-website/providers/Microsoft.Web/sites/mwsun-website",
+  "appService.deploySubpath": "."
+}

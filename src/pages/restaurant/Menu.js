@@ -1,20 +1,20 @@
-import React, { Fragment } from "react";
+import React from "react";
 
 const Menu = ({ items }) => {
   return (
     <div className='section-center'>
       {items.map((menuItem) => {
-        const { id, title, image, description, price } = menuItem;
+        const { id, name, displayPhoto, description, price } = menuItem;
         return (
           <article key={id} className='menu-item'>
             <img
-              src={"https://mwsun-strapi.onrender.com" + image}
-              alt={title}
+              src={process.env.REACT_APP_UPLOADS_URL + "" + displayPhoto}
+              alt={name}
               className='photo'
             />
             <div className='item-info'>
               <div>
-                <h5>{title}</h5>
+                <h5>{name}</h5>
                 <h4 className='price'>${price}</h4>
               </div>
               <p className='item-text'>{description}</p>

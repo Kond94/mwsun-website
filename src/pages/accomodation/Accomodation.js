@@ -12,15 +12,12 @@ function Accomodation() {
   useEffect(() => {
     const config = {
       headers: {
-        Authorization: `Bearer ${"6a5d48ccb58a2375824da5a06d309505b68e5dffadab817315d16463d70a9630b6b0a9dbd9bffb79990d6359c4f5fa6626f3242dcbb255e41ad0c85023a0dcda1c97bf0e1920a0bc3c20c1a87f94fcbe85cd3c58ca2baa5636be52c72b8d85377fadc66c3f2d3c7e5db8122025f6ca3c7f7916b36f84caa52202e785505970aa"}`,
+        Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
       },
     };
 
     axios
-      .get(
-        "https://mwsun-strapi.onrender.com/api/rooms" + "?populate=*",
-        config
-      )
+      .get(process.env.REACT_APP_API_URL + "/api/rooms" + "?populate=*", config)
       .then(({ data }) => {
         setRooms(data.data);
       })
@@ -45,7 +42,10 @@ function Accomodation() {
           <div className='row'>
             {rooms !== [] &&
               rooms.map(({ id, attributes }) => (
-                <div key={id.toString()} className='col-md-6 col-sm-6'>
+                <div
+                  key={Math.floor(Math.random() * 100)}
+                  className='col-md-6 col-sm-6'
+                >
                   <article className='room_block_item'>
                     <div className='row'>
                       <div className='col-lg-6 col-md-12'>
@@ -56,7 +56,8 @@ function Accomodation() {
                         >
                           <img
                             src={
-                              "https://mwsun-strapi.onrender.com" +
+                              process.env.REACT_APP_UPLOADS_URL +
+                              "" +
                               attributes.displayPhoto.data.attributes.url
                             }
                             className='img-responsive'
@@ -77,15 +78,15 @@ function Accomodation() {
                           <span>${attributes.price} / night</span>
                           <p>{attributes.description}</p>
                           <div className='room_services'>
-                            {attributes.anemities.data.map((anemity) => (
+                            {attributes.amenities.data.map((amenity) => (
                               <i
                                 key={Math.floor(Math.random() * 100)}
-                                className={anemity.attributes.icon}
+                                className={amenity.attributes.icon}
                                 data-toggle='popover'
                                 data-placement='top'
                                 data-trigger='hover'
-                                data-content={anemity.attributes.description}
-                                data-original-title={anemity.attributes.name}
+                                data-content={amenity.attributes.description}
+                                data-original-title={amenity.attributes.name}
                               ></i>
                             ))}
                           </div>
